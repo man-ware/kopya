@@ -55,8 +55,8 @@ $user = $_SESSION['user'];
                         <i class="fa-solid fa-angle-down mainMenuIconArrow showHideSubMenu"></i> 
                     </a>
                     <ul class="subMenus">
-                        <li><a class="subMenuLink" href="#"><i class="fa fa-circle-o"></i> View Suppliers</a></li>
-                        <li><a class="subMenuLink" href="#"><i class="fa fa-circle-o"></i> Add Suppliers</a></li>
+                        <li><a class="subMenuLink" href="./supplier-view.php"><i class="fa fa-circle-o"></i> View Suppliers</a></li>
+                        <li><a class="subMenuLink" href="./supplier-add.php"><i class="fa fa-circle-o"></i> Add Suppliers</a></li>
                     </ul> 
                 </li>
                 
