@@ -719,3 +719,13 @@ span.item_total--label{
     width: 100px;
     height: 100px;
 }
+
+
+/* PLS wag tanggalin e2 CSS ng description*/
+
+.productTextAreaInput{
+    width: 100%;
+    height: 75px;
+    border-radius: 5px;
+    border-color: #5094dc;
+}

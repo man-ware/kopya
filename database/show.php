@@ -5,7 +5,7 @@
 
     $stmt = $conn->prepare("SELECT * FROM $table_name ORDER BY created_at DESC");
     $stmt->execute();
-    $stmt->setFEtchMode(PDO::FETCH_ASSOC);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
     return $stmt->fetchAll();
     

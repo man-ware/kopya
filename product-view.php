@@ -49,18 +49,26 @@
                                                     <td class="firstName">
                                                         <img class ="productImages" src= "database/upload/<?= $product['img']?>" alt="" />
 
-
-
-
-
                                                     </td>
                                                     <td class="lastName"><?= $product['product_name'] ?></td>
                                                     <td class="email"><?= $product['description'] ?></td>
-                                                    <td><?= $product['created_by'] ?></td>
+                                                    <td>
+                                                        <?php 
+                                                            $pid = $product['created_by'];
+                                                            $stmt = $conn->prepare("SELECT * FROM users WHERE id=$pid");
+                                                            $stmt->execute();
+                                                            $row =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+                                                            $created_by_name = $row['first_name'] . ' ' . $row['last_name'];
+                                                            echo $created_by_name;
+                                                        ?>
+
+                                                    </td>
+
                                                     <td><?= date('M d,Y @ h:i:s A', strtotime($product['created_at'])) ?></td>
                                                     <td><?= date('M d,Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
                                                     <td>
-                                                        <a href="" class="updateProduct" data-pid="<?= $product['id']?>"><i class="fa fa-pencil" ></i>Edit</a>
+                                                        <a href="" class="updateProduct" data-pid="<?= $product['id'] ?> " data-pid="<?= $product['id']?>"><i class="fa fa-pencil" ></i>Edit</a> |
                                                         <a href="" class="deleteProduct" data-name = "<?= $product['product_name'] ?>" data-pid="<?= $product['id']?>"><i class="fa fa-trash"></i>Delete</a>
                                                     </td>
                                                 </tr>
