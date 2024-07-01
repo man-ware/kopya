@@ -142,11 +142,11 @@
                                     <input type="text" class="form-control" id="firstName" value="'+ firstName +'">\
                                 </div>\
                                 <div class="form-group">\
-                                    <label for="lastName">First Name:</labeltext>\
+                                    <label for="lastName">Last Name:</labeltext>\
                                     <input type="text" class="form-control" id="lastName" value="'+ lastName +'">\
                                 </div>\
                                 <div class="form-group">\
-                                    <label for="email">First Name:</label>\
+                                    <label for="email">Email:</label>\
                                     <input type="email" class="form-control" id="emailUpdate" value="'+ email +'">\
                                 </div>\
                             </form>',
