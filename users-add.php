@@ -4,7 +4,7 @@
     $_SESSION['table']= 'users';
     $user = $_SESSION['user'];
     $_SESSION['redirect_to']= 'users-add.php';
-    $users = include('database/show-users.php');
+    $users = include('database/show.php');
 
 ?>
 

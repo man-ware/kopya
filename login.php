@@ -33,7 +33,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>IMS Login - Inventory Management System</title>
+        <title>Saggitarius Inc. - Inventory Management System</title>
 
         <link rel="stylesheet" type="text/css" href="css/login.css?v=<?= time() ?>">
 
@@ -47,9 +47,8 @@
         <div class="container">
             <div>
                 <div class="loginHeader">
-                    <h1>IMS</h1>
-                    <h3>
-                        Inventory Management System</h3>
+                    <h1>Saggitarius Inc.</h1>
+        
 
                 </div>
 
@@ -64,7 +63,7 @@
                             <input placeholder="password" name="password" type="password"/>
                         </div>
                         <div class="loginButtonContainer">
-                            <button>login</button>
+                            <button>LogIn</button>
                         </div>
 
                     </form>

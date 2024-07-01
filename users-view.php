@@ -3,7 +3,9 @@
     if(!isset($_SESSION['user'])) header('location: login.php');
     $_SESSION['table']= 'users';
     $user = $_SESSION['user'];
-    $users = include('database/show-users.php');
+
+    $_SESSION['table']= 'users';
+    $users = include('database/show.php');
 
 ?>
 
@@ -91,39 +93,36 @@
                     fullname = fname+' '+lname;
                     
                     BootstrapDialog.confirm({
+                            title: 'Delete User',
                             type: BootstrapDialog.TYPE_DANGER,
-                            message: 'Are you sure you want to delete ' + fullname + '?',
+                            message: 'Are you sure you want to delete <strong>' + fullname + '<strong>?',
                             callback: function(isDelete){
                                 if(isDelete){
-                                    $.ajax({
+                                     $.ajax({
                                         method: 'POST',
                                         data: {
-                                            user_id: userId,
-                                            f_name: fname,
-                                            l_name: lname
+                                            id: userId,
+                                            table: 'users'
                                         },
-                                        url: 'database/delete-user.php',
+                                        url: 'database/delete.php',
                                         dataType: 'json',
                                         success: function(data){
-                                            if(data.success){
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_SUCCESS,
-                                                    message: data.message,
+
+                                            message = data.success ?
+                                            fullname + ' successfully deleted' : 'Error processing your request';
+                                            
+                                            BootstrapDialog.alert({
+                                                    type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
+                                                    message: message,
                                                     callback: function(){
-                                                        location.reload();
+                                                        if(data.success) location.reload();
                                                     }
                                                 });
-                                            } else {
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_DANGER,
-                                                    message: data.message,
-                                                });
                                             }
-                                        }
                                     });
                                 }
-                            }
-                        });
+                            }   
+                    });
                 }
 
                 if(classList.contains('updateUser')){
