@@ -1,8 +1,8 @@
 <?php  
     session_start();
     if(!isset($_SESSION['user'])) header('location: login.php');
-    $_SESSION['table']= 'suppliers';
-    $suppliers = include('database/show.php');
+    $_SESSION['table']= 'products';
+    $products = include('database/show.php');
 
 ?>
 
@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>View Suppliers</title>
+        <title>View Products</title>
         <?php include('partials/app-header-scripts.php'); ?>
     </head>
     <body>
@@ -26,15 +26,15 @@
                         <div class="row">
                             
                             <div class="column column-12">
-                                <h1 class="section_header"><i class="fa-solid fa-list"></i> List of Suppliers</h1>
+                                <h1 class="section_header"><i class="fa-solid fa-list"></i> List of Products</h1>
                                 <div class="users">
                                     
                                     <table>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Supplier Name</th>
-                                                <th>Supplier Location</th>
+                                                <th>Images</th>
+                                                <th>Product Name</th>
                                                 <th>Description</th>
                                                 <th>Created By</th>
                                                 <th>Created At</th>
@@ -43,14 +43,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($suppliers as $index => $supplier){ ?>
+                                            <?php foreach($products as $index => $product){ ?>
                                                 <tr>
                                                     <td><?= $index + 1 ?></td>
-                                                    <td>
-                                                        <?= $supplier['supplier_name'] ?>
+                                                    <td class="firstName">
+                                                        <img class ="productImages" src= "database/upload/<?= $product['img']?>" alt="" />
+
                                                     </td>
-                                                    <td><?= $supplier['supplier_location'] ?> ?></td>
-                                                    <td><?= $supplier['email'] ?></td>
+                                                    <td class="lastName"><?= $product['product_name'] ?></td>
+                                                    <td class="email"><?= $product['description'] ?></td>
+                                                    <td>
+                                                        <?php 
+                                                            $pid = $product['created_by'];
+                                                            $stmt = $conn->prepare("SELECT * FROM users WHERE id=$pid");
+                                                            $stmt->execute();
+                                                            $row =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+                                                            $created_by_name = $row['first_name'] . ' ' . $row['last_name'];
+                                                            echo $created_by_name;
+                                                        ?>
+
+                                                    </td>
+
+                                                    <td><?= date('M d,Y @ h:i:s A', strtotime($product['created_at'])) ?></td>
+                                                    <td><?= date('M d,Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
+                                                    <td>
+                                                        <a href="" class="updateProduct" data-pid="<?= $product['id'] ?> " data-pid="<?= $product['id']?>"><i class="fa fa-pencil" ></i>Edit</a> |
+                                                        <a href="" class="deleteProduct" data-name = "<?= $product['product_name'] ?>" data-pid="<?= $product['id']?>"><i class="fa fa-trash"></i>Delete</a>
+                                                    </td>
+                                                </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
