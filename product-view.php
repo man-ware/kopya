@@ -68,7 +68,7 @@
                                                     <td><?= date('M d,Y @ h:i:s A', strtotime($product['created_at'])) ?></td>
                                                     <td><?= date('M d,Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
                                                     <td>
-                                                        <a href="" class="updateProduct" data-pid="<?= $product['id'] ?> " data-pid="<?= $product['id']?>"><i class="fa fa-pencil" ></i>Edit</a> |
+                                                        <a href="" class="updateProduct" data-pid="<?= $product['id'] ?> "><i class="fa fa-pencil" ></i>Edit</a> |
                                                         <a href="" class="deleteProduct" data-name = "<?= $product['product_name'] ?>" data-pid="<?= $product['id']?>"><i class="fa fa-trash"></i>Delete</a>
                                                     </td>
                                                 </tr>
@@ -88,6 +88,8 @@
     
     <script>
         function script (){
+            var vm = this;
+
             this.registerEvents = function(){
                 document.addEventListener('click', function(e){
                 targetElement = e.target;
@@ -134,9 +136,75 @@
                             }
                         });
                 }
-                  
+                if(classList.contains('updateProduct')){
+                    
+                    e.preventDefault();
+                    
+                    pId = targetElement.dataset.pid;
+
+                    vm.showEditDialog(pId);
+
+                    
+                    
+                }
             });
         }
+            this.showEditDialog = function(id){
+                console.log(id);
+                //$.get('/database/get-product.php', {id: id}), function(){
+
+                //}, 'json');
+
+
+                //BootstrapDialog.confirm({
+                     //       title: 'Update ' + firstName + ' ' + lastName,
+                      //      message: '<form>\
+                     //           <div class="form-group">\
+                     //               <label for="firstName">First Name:</label>\
+                     //               <input type="text" class="form-control" id="firstName" value="'+ firstName +'">\
+                     //           </div>\
+                     //           <div class="form-group">\
+                     //               <label for="lastName">Last Name:</labeltext>\
+                     //               <input type="text" class="form-control" id="lastName" value="'+ lastName +'">\
+                     //           </div>\
+                      //          <div class="form-group">\
+                     //               <label for="email">Email:</label>\
+                     //               <input type="email" class="form-control" id="emailUpdate" value="'+ email +'">\
+                    //           </div>\
+                       //     </form>',
+                     //       callback: function(isUpdate){
+                    //                if(isUpdate){
+                     //                   $.ajax({
+                     //                       data: {
+                      //                          userId: userId,
+                     //                           f_name: document.getElementById('firstName').value,
+                       //                         l_name: document.getElementById('lastName').value,
+                      //                          email: document.getElementById('emailUpdate').value,
+                        //                    },
+                     //                       url: 'database/update-user.php',
+                        //                    dataType: 'json',
+                      //                      success: function(data){
+                     //                               BootstrapDialog.alert({
+                      //                                  type: BootstrapDialog.TYPE_SUCCESS,
+                      //                                  message: data.message,
+                      //                                  callback: function(){
+                      //                                      location.reload();
+                        //                                }
+                     //                               });
+                      //                          } else {
+                      //                              BootstrapDialog.alert({
+                      //                                  type: BootstrapDialog.TYPE_DANGER,
+                       //                                message: data.message,
+                       //                             });
+                        //                        }
+                     //                       }
+                    //                    });
+                    //                }
+                    //            }
+                    //        
+                     //   });
+            }, 
+            
 
             this.initialize = function (){
                 this.registerEvents();
