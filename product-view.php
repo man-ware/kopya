@@ -141,68 +141,71 @@
                     e.preventDefault();
                     
                     pId = targetElement.dataset.pid;
-
                     vm.showEditDialog(pId);
 
-                    
                     
                 }
             });
         }
             this.showEditDialog = function(id){
-                console.log(id);
-                //$.get('/database/get-product.php', {id: id}), function(){
+                $.get('database/get-product.php', {id: id}, function(productDetails){
+                    BootstrapDialog.confirm({
+                        title: 'Update <strong>' + productDetails.product_name + '</strong>',
+                                message: `
+                                    <div class="appFormInputContainer">
+                                        <label for="product_name"> Product Name</label>
+                                        <input type="text" class="appFormInput" id="product_name" placeholder="Enter product name..." name="product_name" value="${productDetails.product_name}" />
+                                    </div>
+                                    <div class="appFormInputContainer">
+                                        <label for="description">Description</label>
+                                        <textarea class="appFormInput productTextAreaInput" placeholder="Enter product description..." id="description" name="description">${productDetails.description}</textarea>
+                                    </div>
+                                    <div class="appFormInputContainer">
+                                        <label for="product_image"> Product Image</label>
+                                        <input type="file" name="img" id="product_image" />
+                                    </div>
+                                    <div class="appFormInputContainer">
+                                        <label for="unit_price"> Price</label>
+                                        <input type="text" class="appFormInput" id="unit_price" placeholder="Enter product price..." name="unit_price" value="${productDetails.unit_price}" />
+                                    </div>
+                                `,
+                            callback: function(isUpdate){
+                                    if(isUpdate){
+                                        $.ajax({
+                                            method: 'POST',
+                                            data: {
+                                                userId: userId,
+                                                f_name: document.getElementById('firstName').value,
+                                                l_name: document.getElementById('lastName').value,
+                                                email: document.getElementById('emailUpdate').value,
+                                            },
+                                            url: 'database/update-user.php',
+                                            dataType: 'json',
+                                            success: function(data){
+                                                if(data.success){
+                                                    BootstrapDialog.alert({
+                                                        type: BootstrapDialog.TYPE_SUCCESS,
+                                                        message: data.message,
+                                                        callback: function(){
+                                                            location.reload();
+                                                        }
+                                                    });
+                                                } else {
+                                                    BootstrapDialog.alert({
+                                                        type: BootstrapDialog.TYPE_DANGER,
+                                                        message: data.message,
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            
+                        });
+                }, 'json');
 
-                //}, 'json');
 
-
-                //BootstrapDialog.confirm({
-                     //       title: 'Update ' + firstName + ' ' + lastName,
-                      //      message: '<form>\
-                     //           <div class="form-group">\
-                     //               <label for="firstName">First Name:</label>\
-                     //               <input type="text" class="form-control" id="firstName" value="'+ firstName +'">\
-                     //           </div>\
-                     //           <div class="form-group">\
-                     //               <label for="lastName">Last Name:</labeltext>\
-                     //               <input type="text" class="form-control" id="lastName" value="'+ lastName +'">\
-                     //           </div>\
-                      //          <div class="form-group">\
-                     //               <label for="email">Email:</label>\
-                     //               <input type="email" class="form-control" id="emailUpdate" value="'+ email +'">\
-                    //           </div>\
-                       //     </form>',
-                     //       callback: function(isUpdate){
-                    //                if(isUpdate){
-                     //                   $.ajax({
-                     //                       data: {
-                      //                          userId: userId,
-                     //                           f_name: document.getElementById('firstName').value,
-                       //                         l_name: document.getElementById('lastName').value,
-                      //                          email: document.getElementById('emailUpdate').value,
-                        //                    },
-                     //                       url: 'database/update-user.php',
-                        //                    dataType: 'json',
-                      //                      success: function(data){
-                     //                               BootstrapDialog.alert({
-                      //                                  type: BootstrapDialog.TYPE_SUCCESS,
-                      //                                  message: data.message,
-                      //                                  callback: function(){
-                      //                                      location.reload();
-                        //                                }
-                     //                               });
-                      //                          } else {
-                      //                              BootstrapDialog.alert({
-                      //                                  type: BootstrapDialog.TYPE_DANGER,
-                       //                                message: data.message,
-                       //                             });
-                        //                        }
-                     //                       }
-                    //                    });
-                    //                }
-                    //            }
-                    //        
-                     //   });
+                
             }, 
             
 
