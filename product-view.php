@@ -146,12 +146,14 @@
                     
                 }
             });
+
         }
             this.showEditDialog = function(id){
                 $.get('database/get-product.php', {id: id}, function(productDetails){
+                    console.log(productDetails);
                     BootstrapDialog.confirm({
                         title: 'Update <strong>' + productDetails.product_name + '</strong>',
-                                message: `
+                                message: `<form action="database/add.php" method="POST" enctype= "multipart/form-data" id="editProductForm">
                                     <div class="appFormInputContainer">
                                         <label for="product_name"> Product Name</label>
                                         <input type="text" class="appFormInput" id="product_name" placeholder="Enter product name..." name="product_name" value="${productDetails.product_name}" />
@@ -168,9 +170,14 @@
                                         <label for="unit_price"> Price</label>
                                         <input type="text" class="appFormInput" id="unit_price" placeholder="Enter product price..." name="unit_price" value="${productDetails.unit_price}" />
                                     </div>
+                                   
+                                    </form>
                                 `,
                             callback: function(isUpdate){
                                     if(isUpdate){
+
+                                        
+
                                         $.ajax({
                                             method: 'POST',
                                             data: {
