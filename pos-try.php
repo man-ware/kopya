@@ -1,3 +1,10 @@
+<?php  
+
+    include('product.php');
+    $products = getProducts($conn);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,62 +22,74 @@
                     <input type="text" placeholder="Search Product...">
                 </div>       
                 <div class="searchResultContainer">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="productResultContainer">
-                                <img src="images/sakto.png" alt="">
-                                <div class="productInfoContainer">
                                     <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="productName">1.5kg Sakto</p>
+                                    <?php foreach($products as $product){ ?>
+                                        <div class="col-4 productColContainer" data-pid="<?= $product['id'] ?>">
+                                            <div class="productResultContainer">
+                                                <img src="database\upload\<?= $product['img'] ?>" class="productImage" alt="">
+                                                <div class="productInfoContainer">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p class="productName"><?= $product['product_name'] ?></p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p class="productPrice">P<?= $product['price'] ?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <p class="productPrice"> P155.00</p>
-                                        </div>
+                                        <?php    }
+                                        ?>
+                                    </div>  
+                                </div> 
+                            </div>
+                            <div class="col-3 posOrderContainer">
+                                <div class="pos_header">
+                                    <div class="setting alignRight">
+                                        <a href="javascript:void(0)"><i class="fa fa-gear"> </i></a>
                                     </div>
-                                </div>  
+                                    <p class="logo">IMS</p>
+                                    <p class="timeAndDate">XXX XX, XXXX    XX:XX:XX XX</p>
+                                </div>
+                                <div class="pos_items_container">
+                                    <div class="pos_items">
+                                        <p class="itemNoData">No data</p>
+                                    </div>
+                                    <div class="item_total_container">
+                                        <p class="item_total">
+                                            <span class="item_total--label">TOTAL</span>
+                                            <span class="item_total--value">P0.00</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="checkoutBtnContainer">
+                                    <a href="javascript:void(0)" class="checkoutBtn">CHECKOUT</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="productResultContainer">
-                                <img src="images/11kg.png" alt="">
-                                <div class="productInfoContainer">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="productName">11kg Cylinder</p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="productPrice"> P1016.00</p>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="productResultContainer">
-                                <img src="images/50kg.png" alt="">
-                                <div class="productInfoContainer">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="productName">50kg Cylinder</p>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="productPrice"> P000.00</p>
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div>
-                       
-                    </div>  
-                </div>                
-            </div>
-            <div class="col-3">
-                col
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
+        <script>
+            let productsJson = <?= json_encode($products) ?>;
+            var products = {};
+
+            productsJson.forEach((product) =>{
+                products[product.id] = {
+                    name: product.product_name,
+                    stock: product.stock,
+                    price: product.price
+                }
+            });
+
+            console.log(products);
+
+        </script>
+
+         <script src="js/pos_script.js?v=<?= time() ?>"> </script>
+         <?php include('partials/app-scripts.php'); ?>
+    </body>
 </html>

@@ -1,9 +1,11 @@
 <?php
-    session_start();
+	session_start();
 
+	// remove all session variables
+	session_unset();
 
-    session_unset();
+	// destroy
+	session_destroy();
 
-
-    session_destroy();
+	header('location: ../login.php');
 ?>
